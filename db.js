@@ -18,6 +18,7 @@ function makePg() {
   const pool = new Pool({
     connectionString: url,
     ssl: isLocal ? false : { rejectUnauthorized: false }, // Neon & co exigent SSL
+    max: process.env.VERCEL ? 1 : 10, // en serverless (Vercel), garder peu de connexions
   });
   const q = (text, params) => pool.query(text, params);
 
